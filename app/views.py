@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template
+from flask import render_template, request
 
 @app.route('/')
 def index():
@@ -7,4 +7,5 @@ def index():
 
 @app.route('/short', methods=['POST'])
 def short():
-    return render_template('index.html')
+    url = request.form['u']
+    return url
