@@ -1,15 +1,15 @@
 import redis
 import random
-
+from config import HOST
 
 class UrlShorter:
     def __init__(self):
-        self.redis = redis.Redis(host='localhost', port=6739)
+        self.redis = redis.Redis(host='localhost', port=6379)
 
     def gen_short_url(self, long_url):
         short_url = self.redis.get(long_url)
         if short_url:
-            return short_url
+            return HOST + '/u/' + short_url
         rand_id = random.randrange(1000000, 9999999)
         rand_str = base62_encode(rand_id)
         while self.redis.get(rand_str):
@@ -17,7 +17,7 @@ class UrlShorter:
             rand_str = base62_encode(rand_id)
         self.redis.set(rand_str, long_url)
         self.redis.set(long_url, rand_str)
-        return rand_str
+        return HOST + '/u/' + rand_str
 
     def get_long_url(self, code):
         return self.redis.get(code)

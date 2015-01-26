@@ -4,7 +4,7 @@
 
 $(document).ready(function(){
     $('#gen-button').click(function(){
-            var url = $('#input-url').val();
+            var url = 'http://' + $('#input-url').val();
             $.ajax(
                 {
                     data: {'u': url},
@@ -12,7 +12,7 @@ $(document).ready(function(){
                     type: 'POST',
                     dataType: 'text',
                     success: function(resp){
-                        $('#res').text(resp);
+                        $('#res').attr('href', resp).text(resp);
                     },
                     error: function(){
                         alert("error");
